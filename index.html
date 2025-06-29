@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyleaMUN 2026 Certificate Generator</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        #input-form {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            background: #fff;
+            padding: 20px 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        #input-form h2 {
+            text-align: center;
+            color: #002d5a;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            background-color: #0056b3;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        #certificate-output {
+            display: none;
+            width: 1123px;
+            height: 794px;
+            margin: 0 auto;
+            position: relative;
+            color: #2c2c2c;
+        }
+
+        .certificate-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .certificate-image {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .overlay-text {
+            position: absolute;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        #output-delegate-name {
+            top: 315px;
+            font-size: 29pt;
+            font-weight: bold;
+            width: 60%;
+            left: 20%;
+            padding-bottom: 5px;
+        }
+        
+        #output-committee {
+            top: 415px;
+            font-size: 22pt;
+            font-weight: bold;
+            width: 70%;
+            left: 15%;
+            padding-bottom: 5px;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-output, #certificate-output * {
+                visibility: visible;
+            }
+            #certificate-output {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #input-form, #print-button-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="input-form">
+        <h2>PyleaMUN 2026 Certificate Generator</h2>
+        <div class="form-group">
+            <label for="delegate-name">Delegate's Full Name:</label>
+            <input type="text" id="delegate-name" placeholder="e.g., Eleni Papadopoulou">
+        </div>
+        <div class="form-group">
+            <label for="committee">Committee / Representation:</label>
+            <input type="text" id="committee" placeholder="e.g., The Security Council">
+        </div>
+        <button onclick="generateCertificate()" class="button">Generate Certificate</button>
+    </div>
+
+    <div id="certificate-output">
+        <div class="certificate-container">
+            <img src="Certificate2026.png" class="certificate-image" alt="Certificate Background">
+            <div id="output-delegate-name" class="overlay-text"></div>
+            <div id="output-committee" class="overlay-text"></div>
+        </div>
+    </div>
+    
+    <div id="print-button-container" style="display: none; text-align: center; margin-top: 20px;">
+        <button onclick="printCertificate()" class="button" style="max-width: 600px; margin: 0 auto;">Print to PDF</button>
+    </div>
+
+    <script>
+        function generateCertificate() {
+            const delegateName = document.getElementById('delegate-name').value;
+            const committee = document.getElementById('committee').value;
+
+            document.getElementById('output-delegate-name').innerText = delegateName || '\u00A0';
+            document.getElementById('output-committee').innerText = committee || '\u00A0';
+            
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('certificate-output').style.display = 'block';
+            document.getElementById('print-button-container').style.display = 'block';
+        }
+
+        function printCertificate() {
+            // First load the image to ensure it's available for printing
+            const img = new Image();
+            img.src = 'Certificate2026.png';
+            img.onload = function() {
+                window.print();
+            };
+            img.onerror = function() {
+                alert('Error loading certificate image. Please check the file path.');
+            };
+        }
+    </script>
+
+</body>
+</html>
